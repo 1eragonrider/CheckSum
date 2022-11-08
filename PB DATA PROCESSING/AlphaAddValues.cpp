@@ -52,11 +52,27 @@ int main()
 	for (_chk_sum = _min_chk_sum; _chk_sum <= _max_chk_sum; _chk_sum++)
 	// loop through each sum target in the range provided by the user and output to a file.
 	{
-		// create a folder named after the loop
-		std::ofstream _out_file;
+		// create a file named after the loop
 		std::string _file_name = std::to_string(_chk_sum) + "_" + "Addition_Values.txt";
+
+		// ******change this _path to be teh local path on your computer
+		std::string _path = "C:\\Users\\Andre\\Desktop\\PersonalProjects\\CheckSums\\" + _file_name;
+		std::ofstream _out_file(_path); // comment this if you would like to output to the project folder
+		//std::ofstream _out_file; // comment this if you would like to output to _path
+
 		// e.g. 160_Addition_Values.txt  
-		_out_file.open(_file_name, std::ios::out);
+		_out_file.open(_path, std::ios::out); // comment this if you would like to output to the project folder
+		//_out_file.open(_file_name, std::ios::out); // comment this if you would like to output to _path
+
+		if (_out_file.is_open())
+		{
+			std::cout << "File is open and ready to use..." << std::endl;
+		}
+		else
+		{
+			std::cout << "File is not open" << std::endl;
+			break;
+		}
 		
 		// switch control over which nested loop to enter
 		switch (_num_values_to_add)
@@ -98,12 +114,15 @@ void FileAmend(std::ofstream& _file_par, std::string _string_par)
 {
 	if (_file_par.is_open())
 	{
-		_file_par << _string_par << "\n";
+		_file_par << _string_par << std::endl;
 	}
 	else
 	{
 		std::cout << "The File cannot be amended." << std::endl;
 	}
+
+	if (_file_par.fail()) 
+		std::cout << "Error3\n";
 }
 
 void CheckSum2(int _chk_sum_par, int _range_min_par, int _range_max_par, std::ofstream& _file_par, std::string _string_par)
